@@ -194,10 +194,10 @@ class Trainer:
                 super_max, super_pred = torch.max(super_probs.data, 1)
                 sub_max, sub_pred = torch.max(sub_probs.data, 1)
 
-                super_pred_label = super_pred.item() if super_max.item() > 0.6 else 3
+                super_pred_label = super_pred.item() if super_max.item() > 0.9 else 3
                 sub_pred_label = sub_pred.item() if sub_max.item() > 0.5 else 87
 
-                if not super_max.item() > 0.6:
+                if not super_max.item() > 0.9:
                     total_super_unseen += 1
                 if not sub_max.item() > 0.5:
                     total_sub_unseen += 1
@@ -230,10 +230,10 @@ trainer = Trainer(model, criterion, optimizer, train_loader, val_loader, test_lo
 #     print('')
 # print('Finished training.')
 
-# torch.save(model.state_dict(), 'clip.pth')
-model.load_state_dict(torch.load('clip.pth', map_location=device))
+# torch.save(model.state_dict(), 'clip_model.pth')
+model.load_state_dict(torch.load('clip_model.pth', map_location=device))
 model.to(device)
 
 print('Saving...')
-test_predictions = trainer.test('test_predictions_clip_lol.csv')
+test_predictions = trainer.test('test_predictions_clip.csv')
 print('Finished saving to CSV.')
