@@ -11,10 +11,8 @@ class CLIPMultiLabelClassifier(nn.Module):
         for param in self.clip_model.parameters():
             param.requires_grad = False
 
-        self.superclass_head = nn.Linear(self.clip_model.visual.output_dim, 4)  # 3 + novel
-        self.subclass_head = nn.Linear(
-            self.clip_model.visual.output_dim, num_subclasses + 1
-        )  # + novel
+        self.superclass_head = nn.Linear(self.clip_model.visual.output_dim, 4)
+        self.subclass_head = nn.Linear(self.clip_model.visual.output_dim, num_subclasses + 1)
 
     def forward(self, images):
         with torch.no_grad():

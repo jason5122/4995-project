@@ -194,12 +194,12 @@ class Trainer:
                 super_max, super_pred = torch.max(super_probs.data, 1)
                 sub_max, sub_pred = torch.max(sub_probs.data, 1)
 
-                super_pred_label = super_pred.item() if super_max.item() > 0.9 else 3
-                sub_pred_label = sub_pred.item() if sub_max.item() > 0.5 else 87
+                super_pred_label = super_pred.item() if super_max.item() > 0.99 else 3
+                sub_pred_label = sub_pred.item() if sub_max.item() > 0.95 else 87
 
-                if not super_max.item() > 0.9:
+                if not super_max.item() > 0.99:
                     total_super_unseen += 1
-                if not sub_max.item() > 0.5:
+                if not sub_max.item() > 0.95:
                     total_sub_unseen += 1
 
                 test_predictions['image'].append(img_name[0])
